@@ -1,0 +1,20 @@
+HARTAL-SIR-METHOD
+
+T = int(input())
+
+for t in range(T):
+    N = int(input()) #Number of days
+    P = int(input()) #Number of political parties
+    hartal_parameter = []
+    
+    for i in range(P):
+        hartal_parameter.append(int(input()))
+    
+    hartal_days = [0 for x in range(0,N+1)]
+    for d in range(1,N+1): #number of days over which simulation needs to run
+        for i in range(P):
+            if d%hartal_parameter[i] == 0 and d%7!=6 and d%7!=0 and hartal_days[d]==0:
+                hartal_days[d]=1
+
+    
+    print(sum(hartal_days))
