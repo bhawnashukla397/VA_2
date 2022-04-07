@@ -1,0 +1,40 @@
+                
+		IPL Auction as Team Boss
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int l,a;
+        vector<int>v;
+        cin>>l;
+        for(int i=0;i<l;i++)
+        {
+            cin>>a;
+            v.push_back(a);
+        }
+        if(l==2)
+        {
+            cout<<max(v[0],v[1])<<endl;
+        }
+        else{
+            v[l-3]+=v[l-1];
+            for(int i=l-4;i>=0;i--)
+            {
+                v[i]+=max(v[i+2],v[i+3]);
+            }
+            cout<<max(v[0],v[1])<<endl;
+        }
+    }
+    return 0;
+}
