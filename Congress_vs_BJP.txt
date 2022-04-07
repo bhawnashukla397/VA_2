@@ -1,0 +1,56 @@
+
+			Congress vs BJP
+
+class Node:
+    #Create an empty node of binary tree
+    def __init__(self,key):
+        self.left = None
+        self.right = None
+        self.value = key
+    
+#take input of binary tree from level order
+def construct_binary_tree(values):
+    if values == []:
+        return None
+    
+    #create iterator from list
+    values = iter(values)
+    root = Node(next(values))
+
+    #Store the node in a queue
+    nodes_to_fill = [root]
+    try:
+        while True:
+            #Remove node from front of queue
+            next_node = nodes_to_fill.pop(0) 
+            new_left = next(values)
+            if new_left is not None and new_left != '#':
+                next_node.left = Node(new_left)
+                nodes_to_fill.append(next_node.left)
+            new_right = next(values)
+            if new_right is not None and new_right != '#':
+                next_node.right = Node(new_right)
+                nodes_to_fill.append(next_node.right)
+    except StopIteration:
+        return root
+
+def is_unival(root):
+    return unival_helper(root, root.value)
+
+def unival_helper(root, value):
+    #every leaf is considered to be unival
+    if root is None:
+        return True
+    if root.value == value:
+        return unival_helper(root.left, value) and unival_helper(root.right, value)
+    return False
+
+def count_unival_subtrees(root):
+    if root is None:
+        return 0
+    left = count_unival_subtrees(root.left)
+    right = count_unival_subtrees(root.right)
+    return 1 + left + right if is_unival(root) else left + right
+
+root = construct_binary_tree(['B', 'C', 'B', '#', 'C', 'B', 'B'])
+print(count_unival_subtrees(root))
